@@ -81,8 +81,7 @@ requirements.txt      runtime dependencies only (no package install)
 
 Conducted within Waymark, a community-based provider organization providing
 free medical and social services to patients receiving Medicaid. Approved
-with a waiver of informed consent by WCG IRB (protocol HEDIS-OPT-2024-001,
-amended May 31, 2025).
+with a waiver of informed consent by WCG IRB (protocol HEDIS-OPT-2024-001).
 
 ## License
 
