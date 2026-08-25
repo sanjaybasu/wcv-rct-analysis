@@ -1,5 +1,21 @@
 # Reported Results (for independent verification)
 
+## Table 1 (baseline characteristics), key rows
+
+| Characteristic | Arm 1 | Arm 2 | Arm 3 | P | Corrected P |
+|---|---|---|---|---|---|
+| Baseline enrollment, mean (median), mo | 4.6 (5.0) | 4.7 (5.0) | 4.7 (5.0) | .62 | >.99 |
+| Study period observation, mean (median), mo | 5.9 (7.0) | 5.8 (7.0) | 5.7 (7.0) | .31 | >.99 |
+| Age, mean (median), y | 12.8 (13.1) | 13.1 (13.7) | 12.7 (13.2) | .21 | >.99 |
+| Age 18-21 y, No. (%) | 177 (19.1) | 175 (18.4) | 171 (18.1)* | .85 | >.99 |
+| Black or African American | 386 (41.6%) | 331 (34.9%) | 378 (40.0%) | <.001 | .004 |
+| White | 303 (32.7%) | 379 (39.9%) | 330 (34.9%) | <.001 | .004 |
+| Anxiety, No. (%) | 25 (2.7%) | 50 (5.3%) | 41 (4.3%) | .02 | .27 |
+
+\* Age 18-21 uses an inclusive 18≤age≤21 definition, matching the row label and the trial's stated 0-21 year eligibility range.
+
+
+
 Running `primary_analysis.run_primary_analysis` and `subgroup_analysis.age_subgroups` /
 `race_subgroups` against a correctly formatted extract of the trial data should
 reproduce the following manuscript results.

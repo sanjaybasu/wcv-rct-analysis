@@ -28,6 +28,14 @@ formatted extract of the trial data.
   (Arm 3 vs Arm 2).
 - **Cost analysis** (`src/wcv_rct/cost_analysis.py`): marginal technology cost
   per scheduling attempt and incremental cost per completed well-child visit.
+- **Baseline characteristics** (`src/wcv_rct/baseline_table.py`): fully
+  reproduces Table 1 (age, sex, race, clinical utilization, medication use,
+  and condition prevalence by arm, with omnibus tests and a Bonferroni
+  correction across 15 baseline comparisons). One published row — "Members
+  per household" — is explicitly marked as **not reproducible from the data
+  provided**: no computation for it exists in the source analysis notebook,
+  and it does not reconcile with any household/contact grouping variable
+  present in the data.
 
 ## Reproducibility and data
 
