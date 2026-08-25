@@ -60,6 +60,15 @@ def age_subgroups(df: pd.DataFrame) -> dict:
     }
 
 
+def age_band_subgroups(df: pd.DataFrame) -> dict:
+    """Exploratory post hoc age-band analysis (eTable 6), using age bands that
+    approximate AAP Bright Futures periodicity groupings."""
+    bins = [-0.01, 5, 11, 17, 100]
+    labels = ["0-5", "6-11", "12-17", "18-21"]
+    band = pd.cut(df["age"], bins=bins, labels=labels)
+    return {label: subgroup_result(df, band == label) for label in labels}
+
+
 def race_subgroups(df: pd.DataFrame, race_values: list[str] | None = None) -> dict:
     race_values = race_values or ["Black or African American", "White"]
     return {race: subgroup_result(df, df["race"] == race) for race in race_values}

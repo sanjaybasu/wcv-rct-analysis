@@ -20,12 +20,16 @@ formatted extract of the trial data.
   test of well-child visit completion across the three arms, followed by a
   generalized estimating equations (GEE) model (binomial family, exchangeable
   correlation structure, robust sandwich standard errors) clustered by
-  household contact to account for within-household correlation from
-  household-level randomization.
+  household to account for within-household correlation from household-level
+  randomization. Household clusters are defined using the source data's
+  phone-sharing indicator (`shared_contact`): a phone number is treated as one
+  household only where it was flagged as intentionally shared between
+  participants; every other participant, including those with no phone number
+  on file, is its own single-participant cluster.
 - **Subgroup analysis** (`src/wcv_rct/subgroup_analysis.py`): exploratory
-  age-group and race subgroup analyses, each with an omnibus three-arm
-  chi-squared test and a Bonferroni-corrected pairwise comparison
-  (Arm 3 vs Arm 2).
+  age-group, finer Bright Futures-aligned age-band, and race subgroup
+  analyses, each with an omnibus three-arm chi-squared test and a
+  Bonferroni-corrected pairwise comparison (Arm 3 vs Arm 2).
 - **Cost analysis** (`src/wcv_rct/cost_analysis.py`): marginal technology cost
   per scheduling attempt and incremental cost per completed well-child visit.
 - **Baseline characteristics** (`src/wcv_rct/baseline_table.py`): fully

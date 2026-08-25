@@ -32,10 +32,20 @@ Omnibus chi-squared: χ²=16.34, df=2, P<.001
 
 ## GEE (household-clustered)
 
-- N clusters: 2,283; mean cluster size: 1.2
-- Arm 2 vs Arm 1: OR=0.88 (95% CI, 0.69–1.11), P=.27
-- Arm 3 vs Arm 1: OR=1.40 (95% CI, 1.13–1.73), P=.002
-- Arm 3 vs Arm 2: OR=1.60 (95% CI, 1.28–2.00), P<.001
+Household clusters are defined using the trial's `shared_contact` indicator: a
+participant's contact phone number where that number was flagged as shared
+with another household member; a participant with a unique, unshared, or
+missing phone number is treated as a single-participant cluster. (An earlier
+version of this file, and of the manuscript, defined clusters as raw
+phone-number matches without this flag, which produced 2,283 clusters and
+excluded 4 participants with no phone number on file; that definition
+undercounted true clusters — see `src/wcv_rct/primary_analysis.py`'s
+`household_id` docstring for the exact rule.)
+
+- N clusters: 2,316; mean cluster size: 1.2; max cluster size: 7
+- Arm 2 vs Arm 1: OR=0.88 (95% CI, 0.70–1.11), P=.29
+- Arm 3 vs Arm 1: OR=1.41 (95% CI, 1.13–1.76), P=.002
+- Arm 3 vs Arm 2: OR=1.60 (95% CI, 1.28–2.01), P<.001
 
 ## Exploratory subgroup analyses (Arm 3 vs Arm 2)
 
@@ -45,3 +55,12 @@ Omnibus chi-squared: χ²=16.34, df=2, P<.001
 | Age 12-21 | 112/606 (18.5%) | 149/579 (25.7%) | +7.3 | .003 |
 | Black or African American | 72/331 (21.8%) | 101/378 (26.7%) | +5.0 | .124 |
 | White | 79/379 (20.8%) | 93/330 (28.2%) | +7.3 | .023 |
+
+## Exploratory age-band subgroup analysis (eTable 6, Bright Futures-aligned)
+
+| Age band | Arm 1 | Arm 2 | Arm 3 | Overall P | Arm3 vs Arm2 diff (pp) | P |
+|---|---|---|---|---|---|---|
+| 0-5 | 38/94 (40.4%) | 35/88 (39.8%) | 31/92 (33.7%) | .584 | -6.1 | .398 |
+| 6-11 | 62/262 (23.7%) | 62/255 (24.3%) | 100/274 (36.5%) | .001 | +12.2 | .002 |
+| 12-17 | 81/313 (25.9%) | 83/334 (24.9%) | 100/331 (30.2%) | .257 | +5.4 | .122 |
+| 18-21 | 37/258 (14.3%) | 29/272 (10.7%) | 49/248 (19.8%) | .014 | +9.1 | .004 |

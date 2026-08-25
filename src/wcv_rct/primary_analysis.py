@@ -7,9 +7,16 @@ Expects a DataFrame with one row per randomized participant and columns:
                    end of the outcome-observation window, else 0
     denominator    int, 1 for every included participant (HEDIS-style numerator/
                    denominator convention retained from the source pipeline)
-    household_id   household- or contact-level identifier used to cluster
-                   participants who were randomized together (all children in a
-                   household were assigned to the same arm)
+    household_id   household cluster identifier for the GEE model. Defined as
+                   the participant's contact phone number where that number
+                   was flagged in the source data as shared with another
+                   household member; participants with a unique, unshared, or
+                   missing phone number should each carry their own distinct
+                   value (e.g., their participant ID) so they are treated as
+                   single-participant clusters rather than dropped. Any
+                   cluster spanning more than one ARM value should be split
+                   into arm-specific sub-clusters before calling gee_model,
+                   since GEE clusters must nest within the treatment arm.
 
 No patient data is included in or referenced by this module.
 """
@@ -45,13 +52,16 @@ def gee_model(df: pd.DataFrame) -> dict:
     """GEE model (binomial family, exchangeable correlation, robust sandwich SEs)
     clustered by household_id, with Arm 1 as the reference category.
 
-    Rows with a missing household_id are excluded prior to fitting, consistent
-    with standard GEE handling of missing cluster identifiers; the analyzed N
-    is reported alongside the intention-to-treat N so any difference is
-    explicit.
+    Every row is retained: a row with a missing household_id is assigned a
+    unique singleton cluster rather than being dropped, so the analyzed N
+    matches the intention-to-treat N.
     """
     itt_n = len(df)
-    gee_df = df[["outcome", "ARM", "household_id"]].dropna().copy()
+    gee_df = df[["outcome", "ARM", "household_id"]].copy()
+    gee_df["household_id"] = gee_df["household_id"].where(
+        gee_df["household_id"].notna(), "singleton_" + gee_df.index.astype(str)
+    )
+    gee_df = gee_df.dropna(subset=["outcome", "ARM"])
     gee_df["arm2"] = (gee_df["ARM"] == 2).astype(int)
     gee_df["arm3"] = (gee_df["ARM"] == 3).astype(int)
     exog = pd.DataFrame({"intercept": 1, "arm2": gee_df["arm2"], "arm3": gee_df["arm3"]})
