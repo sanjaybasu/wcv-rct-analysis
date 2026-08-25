@@ -92,7 +92,10 @@ def categorical_omnibus_p(df: pd.DataFrame, col: str, categories: list[str]) -> 
     for cat in categories:
         row = [int(((df["ARM"] == arm) & (df[col] == cat)).sum()) for arm in (1, 2, 3)]
         tab.append(row)
-    chi2, p, dof, _ = chi2_contingency(tab)
+    try:
+        chi2, p, dof, _ = chi2_contingency(tab)
+    except ValueError:
+        p = 1.0  # degenerate table (e.g. a category with zero count in every arm)
     return {"p_value": p, "corrected_p": _bonf(p)}
 
 
@@ -116,7 +119,10 @@ def build_table1(demo: pd.DataFrame, clin: pd.DataFrame) -> dict:
         [int(((demo["ARM"] == arm) & (demo["gender"] == g)).sum()) for arm in (1, 2, 3)]
         for g in ("Male", "Female")
     ]
-    chi2, p, _, _ = chi2_contingency(gender_tab)
+    try:
+        chi2, p, _, _ = chi2_contingency(gender_tab)
+    except ValueError:
+        p = 1.0  # degenerate table (e.g. a sex category with zero count in every arm)
     table["Sex, No. (%)"] = {
         "Male": _categorical_row(demo, "gender", "Male")["by_arm"],
         "Female": _categorical_row(demo, "gender", "Female")["by_arm"],

@@ -36,7 +36,10 @@ def subgroup_result(df: pd.DataFrame, mask: pd.Series) -> dict:
         counts[arm] = (int(a["outcome"].sum()), int(a["denominator"].sum()))
 
     table = [[num, den - num] for num, den in counts.values()]
-    chi2, overall_p, dof, _ = chi2_contingency(table)
+    try:
+        chi2, overall_p, dof, _ = chi2_contingency(table)
+    except ValueError:
+        overall_p = 1.0  # degenerate table (e.g. zero events or zero denominator in an arm)
 
     stat, p32 = proportions_ztest(
         [counts[3][0], counts[2][0]], [counts[3][1], counts[2][1]]

@@ -52,7 +52,7 @@ access-controlled extract of the trial data, but no such extract is provided
 or referenced here.
 
 ```
-pip install -r requirements.txt
+pip install -e .
 ```
 
 ```python
@@ -64,11 +64,17 @@ results = run_primary_analysis(df)
 print(results)
 ```
 
+Run `pip install -e ".[test]" && pytest` to run the test suite against synthetic
+data (`tests/`); it checks each module's outputs against known values, not
+against the trial data.
+
 ## Layout
 
 ```
-src/wcv_rct/          analysis modules: primary_analysis, subgroup_analysis, cost_analysis
-requirements.txt      Python dependencies
+src/wcv_rct/          analysis modules: primary_analysis, subgroup_analysis, cost_analysis, baseline_table
+tests/                unit tests against synthetic data with known expected outputs
+pyproject.toml        package definition; makes `wcv_rct` importable via `pip install -e .`
+requirements.txt      runtime dependencies only (no package install)
 ```
 
 ## Study context
